@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abducted</title>
+<meta name="description" content="Aliens vs farmers. Your UFO crashed in a farmer's field. Hide in the tall grass, throw poo at giant faces, and reach the mothership's beam. Online co-op for up to 4 players.">
+<meta property="og:title" content="Abducted">
+<meta property="og:description" content="Aliens vs farmers. Hide in the tall grass, throw poo at giant faces, reach the mothership.">
+<meta property="og:image" content="img/beam.jpg">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1409;
+    --bg-2: #161d0e;
+    --card: #1c2412;
+    --line: rgba(255, 255, 255, 0.09);
+    --text: #eef0e6;
+    --muted: #a6ae96;
+    --yellow: #fbcd40;
+    --yellow-ink: #1a1505;
+    --green: #7ef08f;
+    --red: #f2594a;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 Nunito, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--yellow); }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3 { font-family: "Lilita One", "Arial Black", sans-serif; font-weight: 400; letter-spacing: 0.5px; margin: 0; }
+  h2 { font-size: clamp(30px, 5vw, 44px); color: var(--yellow); margin-bottom: 8px; }
+  .lead { color: var(--muted); margin: 0 0 32px; max-width: 640px; }
+  section { padding: 72px 0; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: min(92vh, 860px);
+    display: flex;
+    align-items: flex-end;
+    background: url("img/beam.jpg") center 30% / cover no-repeat;
+    isolation: isolate;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(10, 14, 6, 0.92) 0%, rgba(10, 14, 6, 0.6) 45%, rgba(10, 14, 6, 0.05) 75%),
+      linear-gradient(0deg, var(--bg) 0%, rgba(15, 20, 9, 0) 35%);
+  }
+  .hero .wrap { width: 100%; padding-bottom: 72px; }
+  .logo {
+    font-size: clamp(56px, 11vw, 120px);
+    line-height: 0.95;
+    color: var(--yellow);
+    text-shadow: 0 6px 0 #3a2a05, 0 14px 30px rgba(0, 0, 0, 0.5);
+  }
+  .tagline { font-size: clamp(18px, 2.4vw, 22px); max-width: 560px; margin: 18px 0 30px; color: #e6e9da; }
+  .downloads { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 26px; border-radius: 14px;
+    font: 800 18px Nunito, sans-serif; text-decoration: none;
+    border: 2px solid transparent; transition: transform 0.12s, background 0.12s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn-primary { background: var(--yellow); color: var(--yellow-ink); box-shadow: 0 8px 24px rgba(251, 205, 64, 0.25); }
+  .btn-primary:hover { background: #ffdb6a; }
+  .btn-ghost { background: rgba(255, 255, 255, 0.08); color: var(--text); border-color: var(--line); }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.14); }
+  .meta { margin-top: 14px; color: var(--muted); font-size: 15px; }
+  .meta b { color: var(--text); }
+  .pill {
+    display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 14px; font-weight: 800;
+    background: rgba(126, 240, 143, 0.14); color: var(--green); margin-bottom: 18px;
+  }
+
+  /* ---------- features ---------- */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .feature { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .feature .emoji { font-size: 30px; line-height: 1; }
+  .feature h3 { font-size: 22px; margin: 12px 0 6px; }
+  .feature p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  /* ---------- gallery ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .gallery figure { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--card); }
+  .gallery figure:nth-child(1) { grid-column: span 4; grid-row: span 2; }
+  .gallery figure:nth-child(n+2) { grid-column: span 2; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9; }
+  .gallery figcaption { padding: 10px 14px; font-size: 14px; color: var(--muted); }
+  @media (max-width: 760px) {
+    .gallery { grid-template-columns: 1fr; }
+    .gallery figure:nth-child(n) { grid-column: auto; grid-row: auto; }
+  }
+
+  /* ---------- steps / cards ---------- */
+  .alt { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .card h3 { font-size: 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .card ol, .card ul { margin: 0; padding-left: 22px; }
+  .card li { margin: 7px 0; }
+  .card p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+  kbd {
+    display: inline-block; min-width: 26px; padding: 1px 8px; border-radius: 6px; text-align: center;
+    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-bottom-width: 3px;
+    font: 700 13px/1.6 ui-monospace, Menlo, monospace; color: #fff;
+  }
+  code { background: rgba(255, 255, 255, 0.08); padding: 1px 7px; border-radius: 6px; font-size: 15px; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .controls { grid-template-columns: 1fr; } }
+  .controls table { width: 100%; border-collapse: collapse; }
+  .controls td { padding: 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .controls td:first-child { width: 42%; white-space: nowrap; }
+  .controls tr:last-child td { border-bottom: 0; }
+
+  /* ---------- changelog ---------- */
+  .release { border-left: 3px solid var(--yellow); padding: 4px 0 4px 20px; margin-bottom: 30px; }
+  .release h3 { font-size: 26px; }
+  .release .date { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
+  .release .notes { white-space: pre-wrap; color: #d8dccb; }
+  .note-box {
+    background: rgba(251, 205, 64, 0.08); border: 1px solid rgba(251, 205, 64, 0.3);
+    border-radius: var(--radius); padding: 18px 22px; margin-top: 18px; font-size: 16px;
+  }
+
+  footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="pill">Online co-op &middot; up to 4 players + AI</span>
+    <h1 class="logo">ABDUCTED</h1>
+    <p class="tagline">Your UFO crash-landed in a farmer's field. Hide in the tall grass, throw poo at giant faces, and make it to the mothership's beam before time runs out.</p>
+    <div class="downloads">
+      <a class="btn btn-primary" id="dl-mac" href="https://github.com/amityazdan/abducted-game/releases/latest/download/Abducted-mac.zip">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.9-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3.1.7c1.3 0 2.1-1.2 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.8 1-2.9-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.8 1 .1 2.1-.5 2.7-1.3z"/></svg>
+        Download for Mac
+      </a>
+      <a class="btn btn-ghost" id="dl-win" href="https://github.com/amityazdan/abducted-game/releases/latest/download/Abducted-windows.zip">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.4 4.5v7H3zM11.4 4.4 21 3v8.5h-9.6zM3 12.5h7.4v7L3 18.5zM11.4 12.5H21V21l-9.6-1.4z"/></svg>
+        Download for Windows
+      </a>
+    </div>
+    <div class="meta" id="meta">Latest version: <b id="ver">loading...</b></div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <h2>Aliens vs farmers</h2>
+      <p class="lead">Play as a tiny alien hiding in the grass, or become the giant farmer hunting them down.</p>
+      <div class="features">
+        <div class="feature"><div class="emoji">🌾</div><h3>Hide in the grass</h3><p>The grass towers over you. Sprinting sends big waves the giants can spot from across the field. Stand still and they barely see you.</p></div>
+        <div class="feature"><div class="emoji">💩</div><h3>Poo in the face</h3><p>Lob poo at a giant's face to blind them for a few seconds. Then run, because they get angry.</p></div>
+        <div class="feature"><div class="emoji">🛸</div><h3>Catch the mothership</h3><p>In the last 15 seconds a beam comes down. Get into it to escape. Anyone left behind gets the shotgun.</p></div>
+        <div class="feature"><div class="emoji">👨‍🌾</div><h3>Play the farmer</h3><p>Hunt aliens yourself with a shotgun and a stamina bar, while his wife sweeps the field with her broom.</p></div>
+        <div class="feature"><div class="emoji">🎙️</div><h3>Live voice chat</h3><p>Hold <kbd>V</kbd> to talk. The farmer booms across the field in a deep giant voice. Aliens squeak, and he can hear them nearby.</p></div>
+        <div class="feature"><div class="emoji">🐀</div><h3>Field mice</h3><p>Rats scurry through the grass, fooling the giants with fake waves, and sometimes they bite. Expect screaming.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Screenshots</h2>
+      <p class="lead">Built with Godot. Characters by Meshy.</p>
+      <div class="gallery">
+        <figure><img src="img/beam.jpg" alt="The mothership's green tractor beam over the field" loading="lazy"><figcaption>The mothership arrives: get to the beam</figcaption></figure>
+        <figure><img src="img/farmer.jpg" alt="The farmer aiming his shotgun" loading="lazy"><figcaption>He's seen the grass move</figcaption></figure>
+        <figure><img src="img/alien.jpg" alt="A small alien close up" loading="lazy"><figcaption>You, a very small alien</figcaption></figure>
+        <figure><img src="img/menu.jpg" alt="The main menu" loading="lazy"><figcaption>Host a game, or join a friend</figcaption></figure>
+        <figure><img src="img/mouse.jpg" alt="A field rat in the grass" loading="lazy"><figcaption>Not everything in the grass is friendly</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2>Install</h2>
+      <p class="lead">The game isn't sold through an app store, so your computer will warn you the first time. That's normal.</p>
+      <div class="two">
+        <div class="card">
+          <h3>Mac</h3>
+          <ol>
+            <li>Download <b>Abducted-mac.zip</b> and double-click it to unzip.</li>
+            <li>Drag <b>Abducted</b> into your Applications folder (optional).</li>
+            <li><b>First time only:</b> right-click the app, choose <b>Open</b>, then click <b>Open</b> again.</li>
+            <li>Click <b>Allow</b> when it asks for the microphone (for voice chat).</li>
+          </ol>
+          <p>Works on Apple-chip and Intel Macs, macOS 11 or newer. If macOS says the app "is damaged", run this once in Terminal: <code>xattr -cr /Applications/Abducted.app</code></p>
+        </div>
+        <div class="card">
+          <h3>Windows</h3>
+          <ol>
+            <li>Download <b>Abducted-windows.zip</b> and unzip it (right-click, <b>Extract All</b>).</li>
+            <li>Double-click <b>Abducted.exe</b>.</li>
+            <li><b>First time only:</b> if Windows shows "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
+            <li>If the firewall asks, click <b>Allow access</b> so friends can join you.</li>
+          </ol>
+          <p>Windows 10 or 11, 64-bit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="online">
+    <div class="wrap">
+      <h2>Play online with friends</h2>
+      <p class="lead">One player hosts, everyone else joins with the host's address. <b>Everyone needs the same version</b>: the game tells you if someone has to update.</p>
+      <div class="two">
+        <div class="card">
+          <h3>Same Wi-Fi / house</h3>
+          <ol>
+            <li>The host clicks <b>Host Game</b>.</li>
+            <li>The lobby shows "Friends join with: <code>192.168.x.x</code>". Click <b>Copy</b> and send it.</li>
+            <li>Friends paste it next to <b>Join</b> and click it.</li>
+            <li>The host picks settings and clicks <b>Start Round</b>.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>Over the internet</h3>
+          <ol>
+            <li>Everyone installs <a href="https://tailscale.com/download" target="_blank" rel="noopener">Tailscale</a> (free) and signs in.</li>
+            <li>The host shares their Tailscale network with friends (Tailscale &rarr; <b>Share</b> / invite).</li>
+            <li>Friends join using the host's Tailscale address (starts with <code>100.</code>).</li>
+          </ol>
+          <p>Advanced: instead of Tailscale, the host can forward <b>UDP port 7777</b> on their router and share their public IP.</p>
+        </div>
+      </div>
+      <div class="note-box"><b>New version out?</b> When an update is released, the game shows a <b>"New version available"</b> banner in the menu. Download it here and replace the old app; your settings are kept.</div>
+    </div>
+  </section>
+
+  <section id="controls">
+    <div class="wrap">
+      <h2>Controls</h2>
+      <div class="controls">
+        <div class="card">
+          <h3>Alien</h3>
+          <table>
+            <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Move (walking makes small ripples)</td></tr>
+            <tr><td><kbd>Shift</kbd></td><td>Sprint: big waves, easy to spot</td></tr>
+            <tr><td><kbd>Space</kbd></td><td>Jump up for a peek (you're visible up there)</td></tr>
+            <tr><td><kbd>Click</kbd> / <kbd>E</kbd></td><td>Throw poo at a giant's face</td></tr>
+            <tr><td><kbd>V</kbd></td><td>Hold to talk</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Farmer</h3>
+          <table>
+            <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></td><td>Walk</td></tr>
+            <tr><td><kbd>Shift</kbd></td><td>Run (uses stamina)</td></tr>
+            <tr><td><kbd>Right-click</kbd></td><td>Aim (shows a red laser)</td></tr>
+            <tr><td><kbd>Click</kbd></td><td>Shoot</td></tr>
+            <tr><td><kbd>V</kbd></td><td>Hold to talk in a giant voice</td></tr>
+          </table>
+        </div>
+      </div>
+      <p class="lead" style="margin-top:18px"><kbd>Esc</kbd> opens settings: volume, mouse sensitivity, fullscreen, microphone mode.</p>
+    </div>
+  </section>
+
+  <section class="alt" id="changelog">
+    <div class="wrap">
+      <h2>What's new</h2>
+      <p class="lead">Every version, newest first.</p>
+      <div id="releases"><p class="lead">Loading...</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Abducted &middot; made with Godot &middot; sounds by Kenney (CC0)</div>
+</footer>
+
+<script>
+  // Highlight the right download for this visitor's computer.
+  (function () {
+    var ua = navigator.userAgent || "";
+    if (/Windows/i.test(ua)) {
+      var mac = document.getElementById("dl-mac"), win = document.getElementById("dl-win");
+      mac.className = "btn btn-ghost"; win.className = "btn btn-primary";
+      win.parentNode.insertBefore(win, mac);
+    }
+  })();
+
+  // Version + changelog straight from GitHub Releases, so the page never needs editing.
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  fetch("https://api.github.com/repos/amityazdan/abducted-game/releases?per_page=30")
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (list) {
+      list = list.filter(function (r) { return !r.draft && !r.prerelease; });
+      if (!list.length) throw "none";
+      var latest = list[0];
+      var date = new Date(latest.published_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      document.getElementById("ver").textContent = latest.tag_name + " · " + date;
+      document.getElementById("releases").innerHTML = list.map(function (r) {
+        var d = new Date(r.published_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+        return '<div class="release"><h3>' + esc(r.name || r.tag_name) + '</h3><div class="date">' + d +
+          '</div><div class="notes">' + esc((r.body || "").trim()) + "</div></div>";
+      }).join("");
+    })
+    .catch(function () {
+      document.getElementById("ver").textContent = "see GitHub";
+      document.getElementById("releases").innerHTML = '<p class="lead">See all versions on <a href="https://github.com/amityazdan/abducted-game/releases">GitHub</a>.</p>';
+    });
+</script>
+</body>
+</html>
